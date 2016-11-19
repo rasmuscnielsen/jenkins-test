@@ -33,3 +33,4 @@ $mercedes->delete('origin');
 
 var_dump($dotArray->read('cars.mercedes')); // Now contains model, passengers, colour
 ```
+
