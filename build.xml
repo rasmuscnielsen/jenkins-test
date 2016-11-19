@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="JenkinsTest" default="build" basedir=".">
+<project name="Jenkins Test New" default="build" basedir=".">
     <property name="build-dir" value="${basedir}/build" />
     <property name="src-dir" value="${basedir}/src" />
 
     <target name="build"
-        depends="build-common,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
+        depends="build-common,phploc,phpdox,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
 
     <target name="build-clean"
-        depends="clean,build-common,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
+        depends="clean,build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
 
     <target name="build-dox"
-        depends="build-common,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
+        depends="build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
 
     <target name="build-dox-clean"
-        depends="clean,build-common,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
+        depends="clean,build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
 
     <target name="build-parallel"
         depends="build-common,tools-parallel" />
@@ -33,6 +33,7 @@
             </sequential>
             <antcall target="phpcb" />
             <antcall target="phpcpd" />
+            <antcall target="phpdox" />
             <antcall target="phploc" />
         </parallel>
     </target>
@@ -48,7 +49,7 @@
         <delete dir="${build-dir}/pdepend" />
     </target>
 
-    <target name="composer" depends="clean-composer,composer-install" description="Install or update dependencies" />
+    <target name="composer" depends="clean-composer,composer-install,composer-update" description="Install or update dependencies" />
 
     <!--// Check to see it the vendor folder already exist, if so, then no reason to run //-->
     <target name="composer.check">
@@ -65,6 +66,13 @@
         <echo>Installing dependencies</echo>
         <exec executable="composer" failonerror="true">
             <arg value="install" />
+        </exec>
+    </target>
+
+    <target name="composer-update" depends="composer.check" if="composer.lock.exist.in.gitignore" description="Updating dependencies">
+        <echo>Updating dependencies</echo>
+        <exec executable="composer" failonerror="true">
+            <arg value="update" />
         </exec>
     </target>
 
@@ -123,6 +131,13 @@
         </exec>
     </target>
 
+    <target name="phpdox" description="Generate API documentation using phpDox">
+        <exec executable="phpdox">
+            <arg value="-f" />
+            <arg value="${build-dir}/phpdox.xml" />
+        </exec>
+    </target>
+
     <target name="phploc" description="Measure project size using PHPLOC">
         <exec executable="phploc">
            <arg value="--log-csv" />
@@ -152,7 +167,7 @@
     <target name="phpunit" description="Run unit tests with PHPUnit">
         <exec executable="phpunit" failonerror="true">
             <arg value="-c" />
-            <arg value="${basedir}/phpunit.xml" />
+            <arg value="${basedir}/phpunit.xml.dist" />
             <arg value="--coverage-html" />
             <arg value="${build-dir}/coverage" />
             <arg value="--coverage-clover" />
