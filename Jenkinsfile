@@ -1,17 +1,21 @@
 #!groovy​
 
-currentBuild.result = "SUCCESS"
+node {
 
-try {
+    currentBuild.result = "SUCCESS"
 
-    stage 'Checkout'
-        checkout scm
+    try {
 
-    stage 'Test'
-        echo 'Test message from jenkins file'
+        stage 'Checkout'
+            checkout scm
 
-}
-catch (err) {
-    currentBuild.result = "FAILURE"
-    throw err
+        stage 'Test'
+            echo 'Test message from jenkins file'
+
+    }
+    catch (err) {
+        currentBuild.result = "FAILURE"
+        throw err
+    }
+
 }
