@@ -17,7 +17,7 @@ class DotArray
      */
     public function __construct(&$pointer)
     {
-        $this->pointer = &$pointer;
+        $this->pointer = $pointer;
     }
 
 
