@@ -8,11 +8,11 @@ node {
 
         stage ('Build') {
             checkout scm
-            composer install
+            sh 'composer install'
         }
 
         stage ('Test') {
-            echo 'Test message from jenkins file'
+            sh 'phpunit'
         }
 
     }
