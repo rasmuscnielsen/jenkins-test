@@ -6,8 +6,9 @@ node {
 
     try {
 
-        stage ('Checkout') {
+        stage ('Build') {
             checkout scm
+            composer install
         }
 
         stage ('Test') {
