@@ -5,22 +5,22 @@
     <property name="src-dir" value="${basedir}/src" />
 
     <target name="build"
-        depends="build-common,phploc,phpdox,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
+            depends="build-common,phploc,phpdox,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
 
     <target name="build-clean"
-        depends="clean,build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
+            depends="clean,build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
 
     <target name="build-dox"
-        depends="build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
+            depends="build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
 
     <target name="build-dox-clean"
-        depends="clean,build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
+            depends="clean,build-common,phpdox,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpcb" />
 
     <target name="build-parallel"
-        depends="build-common,tools-parallel" />
+            depends="build-common,tools-parallel" />
 
     <target name="build-parallel-clean"
-        depends="clean,build-common,tools-parallel" />
+            depends="clean,build-common,tools-parallel" />
 
     <target name="build-common" depends="lint,prepare,composer,phpunit" />
 
@@ -106,7 +106,7 @@
         </exec>
     </target>
 
-     <target name="phpcpd" description="Find duplicate code using PHPCPD">
+    <target name="phpcpd" description="Find duplicate code using PHPCPD">
         <exec executable="phpcpd">
             <arg value="--log-pmd" />
             <arg value="${build-dir}/logs/pmd-cpd.xml" />
@@ -115,7 +115,7 @@
     </target>
 
     <target name="phpcs"
-         description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
+            description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
         <exec executable="phpcs">
             <arg value="--standard=${build-dir}/phpcs.xml" />
             <arg path="${src-dir}" />
@@ -140,13 +140,13 @@
 
     <target name="phploc" description="Measure project size using PHPLOC">
         <exec executable="phploc">
-           <arg value="--log-csv" />
-           <arg value="${build-dir}/logs/phploc.csv" />
-           <arg path="${src-dir}" />
+            <arg value="--log-csv" />
+            <arg value="${build-dir}/logs/phploc.csv" />
+            <arg path="${src-dir}" />
         </exec>
     </target>
 
-     <target name="phpmd" description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
+    <target name="phpmd" description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
         <exec executable="phpmd">
             <arg path="${src-dir}" />
             <arg value="text" />
@@ -179,7 +179,7 @@
         </exec>
     </target>
 
-     <target name="prepare" depends="clean-build" description="Prepare for build">
+    <target name="prepare" depends="clean-build" description="Prepare for build">
         <echo>Making the build artifact folders</echo>
         <mkdir dir="${build-dir}/api" />
         <mkdir dir="${build-dir}/code-browser" />
