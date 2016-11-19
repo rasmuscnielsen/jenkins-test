@@ -6,11 +6,13 @@ node {
 
     try {
 
-        stage 'Checkout'
+        stage ('Checkout') {
             checkout scm
+        }
 
-        stage 'Test'
+        stage ('Test') {
             echo 'Test message from jenkins file'
+        }
 
     }
     catch (err) {
