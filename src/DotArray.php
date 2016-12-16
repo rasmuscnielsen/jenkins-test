@@ -184,8 +184,6 @@ class DotArray
             $value = $key; $key = null;
         }
 
-        return false;
-
         // A property key is given
         if(!strpos($key, '.'))
         {
